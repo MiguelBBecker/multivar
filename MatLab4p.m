@@ -24,7 +24,7 @@ Dsim = zeros(4,1); % para obter o estado x na simulacoes
 x0 = [0 0 pi/4 0]; % condicao inicial do pendulo
 
 % Analise do sistema
-eig(A)             % polos da matriz A
+autovalores = eig(A)             % polos da matriz A
 
 sys=ss(A,B,C,D);   % define modelo de estado
  
