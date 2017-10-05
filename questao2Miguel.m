@@ -1,5 +1,6 @@
 clear all
 clc
+xe = [5 0 pi 0];
 
 % Parametros do pendulo invertido
 M = 1; 
@@ -87,7 +88,7 @@ GMF=Ga(2) %FT de malha fechada com relação a referência
 
 x0obs = [0 0 0 0]; % condicao inicial do observador
 
-pobs = 10*pd;
+pobs =4*pd;
 % Matriz de ganho para posicionar os polos de A-LC em pobs
 H = place(A',C',[pobs pobs-0.025 pobs-0.05 pobs-0.075]); %posiciona os polos de A-LC
 Lobs = H'; 
