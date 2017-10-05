@@ -3,18 +3,18 @@ clc
 xe = [5 0 pi 0];
 
 % Parametros do pendulo invertido
-M = 1; 
+Mcar = 1; 
 m = 0.5;
 L = 1; 
 g = 9.81;
 
 % Matrizes do modelo de estado
 A = [0 1  0              0;
-     0 0 -m*g/M          0;
+     0 0 -m*g/Mcar          0;
      0 0  0              1;
-     0 0 (m + M)*g/(M*L) 0];
+     0 0 (m + Mcar)*g/(Mcar*L) 0];
 
-B = [0; 1/M; 0; -1/(M*L)];
+B = [0; 1/Mcar; 0; -1/(Mcar*L)];
 
 C = [1 0 0 0];
 
@@ -23,7 +23,9 @@ D = zeros(1);
 Dsim = zeros(4,1); % para obter o estado x na simulacoes
 
 x0 = [0 0.01 0.3 0]; % condicao inicial do pendulo
+% x0 = [0 0 0 0];
 
+x0obs = [0 0.01 0.3 0]; % condicao inicial do observador
 % Analise do sistema
 autovalores = eig(A)             % polos da matriz A
 
@@ -86,9 +88,9 @@ GMF=Ga(2) %FT de malha fechada com relação a referência
 %Como o valor do K foi separado o calculo do estimador é independente do
 %calculo do modelo interno. (princípio da separação)
 
-x0obs = [0 0 0 0]; % condicao inicial do observador
 
-pobs =4*pd;
+
+pobs =2*pd;
 % Matriz de ganho para posicionar os polos de A-LC em pobs
 H = place(A',C',[pobs pobs-0.025 pobs-0.05 pobs-0.075]); %posiciona os polos de A-LC
 Lobs = H'; 
