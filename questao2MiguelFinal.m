@@ -1,6 +1,8 @@
 clear all
 clc
-xe = [5 0 pi 0];
+
+% Condição inicial do pêndulo para testar os pontos de equilíbrio
+xe = [0 0 pi 0]; % foi usado sin(xe(3)) como u para mostrar que pequenas variações do theta o equilibrio se mantem.
 
 % Parametros do pendulo invertido
 Mcar = 1; 
@@ -71,6 +73,8 @@ Ka = place(Aa,Ba,[pd pd-0.025 pd-0.05 pd-0.075 pd-0.1]);
 K = Ka(1:4); % Ka pode ser separado pelo principio da separação
 
 Km = Ka(5);
+invert=det(Km)
+disp('É inversivel')
 
 % Matriz de transferencia do sistema aumentado em malha-fechada
 E = B;
@@ -116,10 +120,10 @@ Aa2 = [A zeros(4, 2);
     -Bm2*C Am2];
 Ba2 = [B; 0; 0];
 
-% Polo repetido desejado
-pd=-1.6; 
+% Polo repetido desejado da matriz aumentada para senoide
+pds=-1.6; 
 % Matriz de ganho do estado aumentado xa para posicionar os polos de Aa-BaKa em pd
-Ka2 = place(Aa2,Ba2,[pd pd-0.025 pd-0.05 pd-0.075 pd-0.1 pd-0.035]);
+Ka2 = place(Aa2,Ba2,[pds pds-0.025 pds-0.05 pds-0.075 pds-0.1 pds-0.035]);
 polosMF2 = eig(Aa2-Ba2*Ka2)
 K2 = Ka2(1:4); 
 
